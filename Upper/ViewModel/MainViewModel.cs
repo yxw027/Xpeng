@@ -33,6 +33,7 @@ namespace Xpeng.ViewModel
                 D = "0.000",
                 LaunchButtonBack = "#FF0682FF",
                 LaunchButtonContent = "启   动",
+                ZeroError = 0.0
             };
             LaunchServerCommand = new CommandBase()
             {
@@ -78,7 +79,6 @@ namespace Xpeng.ViewModel
                     tcpServerLaunched = false;
                     mainModel.LaunchButtonBack = "#FF0682FF";
                     mainModel.LaunchButtonContent = "启   动";
-                    //new DisposeServerSuccessView().Show();
                 }
                 else
                 {
@@ -123,14 +123,11 @@ namespace Xpeng.ViewModel
             mainModel.Y = y.ToString("f3");
             mainModel.D = Math.Sqrt(y * y + x * x).ToString("f3");
 
-            if (mainModel.config.RecordData)
+            if (DataRecord.recordWriter == null)
             {
-                if (DataRecord.recordWriter == null)
-                {
-                    DataRecord.InitRecord();
-                }
-                DataRecord.Record($"{mainModel.X}\t\t{mainModel.Y}\t\t0.000\t\t{mainModel.D}", mainModel.config.TimeStamp);
+                DataRecord.InitRecord();
             }
+            DataRecord.Record($"{mainModel.X}\t\t{mainModel.Y}\t\t0.000\t\t{mainModel.D}");
         }
 
 

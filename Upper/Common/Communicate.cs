@@ -134,6 +134,7 @@ namespace Xpeng.Common
             Regex regex = new Regex(@"^\d+,\d+,\d+,\d+,\d+,\d+$");
             try
             {
+                List<double> zeroErrors = new List<double>();
                 while (server != null)
                 {
                     // 减少CPU占用
@@ -188,10 +189,23 @@ namespace Xpeng.Common
                             double T_prop = (T_round1 * T_round2 - T_reply1 * T_reply2) * 15.625 * Math.Pow(10, -12) / (T_round1 + T_round2 + T_reply1 + T_reply2);
                             double Distance = T_prop * 3 * Math.Pow(10, 8);
 
+                            if (GlobalValues.mainViewModel.mainModel.ZeroCheck)
+                            {
+                                zeroErrors.Add(Distance);
+                            }
+                            else
+                            {
+                                if (zeroErrors.Count > 0)
+                                {
+                                    GlobalValues.mainViewModel.mainModel.ZeroError = zeroErrors.Sum() / zeroErrors.Count;
+                                    zeroErrors.Clear();
+                                }
+                            }
+
                             // 绘制图形
                             App.Current.Dispatcher.Invoke(new Action(() =>
                             {
-                                GlobalValues.mainViewModel.mainModel.D = Distance.ToString("f5");
+                                GlobalValues.mainViewModel.mainModel.D = (Distance - GlobalValues.mainViewModel.mainModel.ZeroError).ToString("f5");
                             }));
                         }
                     }

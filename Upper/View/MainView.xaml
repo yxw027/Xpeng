@@ -239,24 +239,24 @@
                                  Template="{StaticResource InputTextboxTemplate}" Cursor="IBeam" Foreground="#555"/>
                         <TextBlock Grid.Row="6" Grid.Column="0" 
                                    VerticalAlignment="Center" HorizontalAlignment="Center"
-                                   Text="数据记录" FontSize="16"/>
+                                   Text="检测IP" FontSize="16"/>
                         <CheckBox Grid.Row="6" Grid.Column="1" 
                                   BorderThickness="1,1,0,1"
                                   HorizontalAlignment="Left"
                                   Margin="20 0"
                                   Style="{DynamicResource CheckBoxSwitchStyle}" 
                                   Content="OFF" Tag="ON"
-                                  IsChecked="{Binding mainModel.config.RecordData}"/>
+                                  IsChecked="{Binding mainModel.config.IPDetect}"/>
                         <TextBlock Grid.Row="7" Grid.Column="0" 
                                    VerticalAlignment="Center" HorizontalAlignment="Center"
-                                   Text="时间记录" FontSize="16"/>
+                                   Text="零点校正" FontSize="16"/>
                         <CheckBox Grid.Row="7" Grid.Column="1" 
                                   BorderThickness="1,1,0,1"
                                   HorizontalAlignment="Left"
                                   Margin="20 0"
                                   Style="{DynamicResource CheckBoxSwitchStyle}" 
                                   Content="OFF" Tag="ON"
-                                  IsChecked="{Binding mainModel.config.TimeStamp}"/>
+                                  IsChecked="{Binding mainModel.ZeroCheck}"/>
 
                         <Button Grid.Row="8" Grid.ColumnSpan="2" Margin="10 0 19 0"
                                 Background="{Binding mainModel.LaunchButtonBack}"

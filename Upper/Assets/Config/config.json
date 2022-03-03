@@ -5,6 +5,5 @@
     "DirectionB": "0",
     "DirectionC": "0",
     "DirectionD": "0",
-    "RecordData": true,
-    "TimeStamp": true
+    "IPDetect": true
 }

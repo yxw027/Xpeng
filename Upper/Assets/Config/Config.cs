@@ -35,24 +35,13 @@ namespace Xpeng.Assets.Config
             }
         }
 
-        private bool _recordData;
-        public bool RecordData
+        private bool _ipDetect;
+        public bool IPDetect
         {
-            get { return _recordData; }
+            get { return _ipDetect; }
             set
             {
-                _recordData = value;
-                DoNotify();
-            }
-        }
-
-        private bool _timeStamp;
-        public bool TimeStamp
-        {
-            get { return _timeStamp; }
-            set
-            {
-                _timeStamp = value;
+                _ipDetect = value;
                 DoNotify();
             }
         }
@@ -106,7 +95,7 @@ namespace Xpeng.Assets.Config
         {
             _ip = config.IP;
             _port = config.Port;
-            _recordData = config.RecordData;
+            _ipDetect = config.IPDetect;
         }
 
 

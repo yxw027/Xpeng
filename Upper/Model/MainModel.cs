@@ -67,6 +67,19 @@ namespace Xpeng.Model
             }
         }
 
+        private bool _zeroCheck;
+        public bool ZeroCheck
+        {
+            get { return _zeroCheck; }
+            set
+            {
+                _zeroCheck = value;
+                DoNotify();
+            }
+        }
+
+        public double ZeroError { get; set; }
+
         private string _launchButtonBack;
         public string LaunchButtonBack
         {
@@ -93,6 +106,10 @@ namespace Xpeng.Model
         {
             // 加载设置数据
             config = Config.GetConfig();
+            if (config.IPDetect)
+            {
+                config.IP = Config.GetLocalAddress();
+            }
             Lines = new ObservableCollection<MyLine>();
         }
     }
