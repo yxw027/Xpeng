@@ -1,0 +1,10 @@
+{
+    "IP": "127.0.0.1",
+    "Port": "12121",
+    "DirectionA": "0",
+    "DirectionB": "0",
+    "DirectionC": "0",
+    "DirectionD": "0",
+    "RecordData": true,
+    "TimeStamp": true
+}

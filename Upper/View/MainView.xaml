@@ -1,0 +1,323 @@
+﻿<Window x:Class="Xpeng.View.MainView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:model="clr-namespace:Xpeng.ViewModel" d:DataContext="{d:DesignInstance Type=model:MainViewModel}"
+        mc:Ignorable="d"
+        Title="Xpeng" Height="700" Width="1150" Icon="../Assets/Images/logo.ico"
+        FontFamily="Microsoft YaHei" FontWeight="Medium" FontSize="12"
+        WindowStartupLocation="CenterScreen" WindowStyle="None" AllowsTransparency="True" Background="{x:Null}"
+        TextOptions.TextFormattingMode="Display" 
+        TextOptions.TextRenderingMode="ClearType"
+        TextOptions.TextHintingMode="Fixed" UseLayoutRounding="True">
+    <Window.Resources>
+        <!--顶部窗体按钮模板-->
+        <ControlTemplate x:Key="WindowCloseButtonTemplete" TargetType="Button">
+            <Border Background="Transparent" Name="back" CornerRadius="0 10 0 0">
+                <Path Data="M0 0 12 12 M0 12 12 0" Stroke="#666666" StrokeThickness="1" 
+                      VerticalAlignment="Center" HorizontalAlignment="Center"/>
+            </Border>
+
+            <ControlTemplate.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter TargetName="back" Property="Background" Value="Red"/>
+                </Trigger>
+            </ControlTemplate.Triggers>
+        </ControlTemplate>
+        <ControlTemplate x:Key="WindowMinSizeButtonTemplete" TargetType="Button">
+            <Border Background="Transparent" Name="back">
+                <Path Data="M0 3 12 3" Stroke="#666666" StrokeThickness="1" 
+                      VerticalAlignment="Center" HorizontalAlignment="Center"/>
+            </Border>
+
+            <ControlTemplate.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter TargetName="back" Property="Background" Value="#FFE8E8E8"/>
+                </Trigger>
+            </ControlTemplate.Triggers>
+        </ControlTemplate>
+        <ControlTemplate x:Key="WindowMaxSizeButtonTemplete" TargetType="Button">
+            <Border Background="Transparent" Name="back">
+                <Path Data="M0 2 12.5 2 M12 2 12 14 M12 14 0 14 M0 14 0 2" Stroke="#666666" StrokeThickness="1" 
+                      VerticalAlignment="Center" HorizontalAlignment="Center"/>
+            </Border>
+            <ControlTemplate.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter TargetName="back" Property="Background" Value="#FFE8E8E8"/>
+                </Trigger>
+            </ControlTemplate.Triggers>
+        </ControlTemplate>
+        <!--输入框模板-->
+        <ControlTemplate TargetType="TextBox" x:Key="InputTextboxTemplate">
+            <Border x:Name="border" 
+                    Background="#FFF9F9F9"
+                    BorderBrush="#DDD"                
+                    BorderThickness="2" 
+                    SnapsToDevicePixels="True"
+                    CornerRadius="5">
+                <Grid>
+                    <ScrollViewer x:Name="PART_ContentHost" Focusable="false" 
+                                  HorizontalScrollBarVisibility="Hidden" 
+                                  VerticalScrollBarVisibility="Hidden"
+                                  VerticalAlignment="Center"
+                                  HorizontalAlignment="Center"/>
+                </Grid>
+            </Border>
+        </ControlTemplate>
+        <!--开关按钮模板-->
+        <Style x:Key="CheckBoxSwitchStyle" TargetType="CheckBox">
+            <Setter Property="IsChecked" Value="False"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="FontFamily" Value="/MESToolIntegration;component/Fonts/#iconfont"/>
+            <Setter Property="Background" Value="#FFFFFF"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="CheckBox">
+                        <Border Width="54" Name="CheckTrueBG" Height="22" BorderThickness="1" Background="#FFFFFF"  CornerRadius="10" BorderBrush="#ACACAC" >
+                            <Grid>
+                                <Border BorderThickness="1" Background="#ACACAC" x:Name="border" Width="20" Height="20" CornerRadius="9" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0"  >
+                                    <Border.RenderTransform>
+                                        <TranslateTransform  X="1"/>
+                                    </Border.RenderTransform>
+                                </Border>
+                                <TextBlock x:Name="txt" Text="{TemplateBinding Content}" FontFamily="iconfont"  FontSize="{TemplateBinding FontSize}" Margin="6.996,2.798,0,2.798" VerticalAlignment="Stretch" Foreground="#ACACAC" HorizontalAlignment="Left" d:LayoutOverrides="Height" >
+                                    <TextBlock.RenderTransform>
+                                        <TranslateTransform   X="17"></TranslateTransform>
+                                    </TextBlock.RenderTransform>
+                                </TextBlock>
+                            </Grid>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsChecked" Value="true">
+                                <Setter Property="Background" TargetName="CheckTrueBG"  Value="#5FB878"/>
+                                <Setter Property="Foreground" TargetName="txt"  Value="#FFFFFF"/>
+                                <Setter Property="Background" TargetName="border"  Value="#FFFFFF"/>
+                                <Setter Property="Text" TargetName="txt" Value="{Binding Tag,RelativeSource={RelativeSource TemplatedParent}}"/>
+                                <Trigger.EnterActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <DoubleAnimation Storyboard.TargetName="border" Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.X)" To="32" Duration="00:00:0.3" Timeline.DesiredFrameRate="140"/>
+                                            <DoubleAnimation Storyboard.TargetName="txt" Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.X)" To="0" Duration="00:00:0.3" Timeline.DesiredFrameRate="140"/>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </Trigger.EnterActions>
+                                <Trigger.ExitActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <DoubleAnimation Storyboard.TargetName="border" Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.X)" To="0" Duration="00:00:0.3" Timeline.DesiredFrameRate="140"/>
+                                            <DoubleAnimation Storyboard.TargetName="txt" Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.X)" To="17" Duration="00:00:0.3" Timeline.DesiredFrameRate="140"/>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </Trigger.ExitActions>
+                            </Trigger>
+                            <Trigger Property="IsChecked" Value="False">
+                                <Setter Property="Text" TargetName="txt" Value="{Binding Content,RelativeSource={RelativeSource TemplatedParent}}"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <!--选择按钮模板-->
+        <ControlTemplate x:Key="ChooseButtonTemplate" TargetType="Button">
+            <Border Background="{Binding Background, RelativeSource={RelativeSource TemplatedParent}}" CornerRadius="5" Width="{Binding Width,RelativeSource={RelativeSource TemplatedParent}}" Height="30">
+                <Grid>
+                    <TextBlock Text="&#xe620;" FontFamily="../Assets/Fonts/#iconfont" FontSize="14" Margin="70 8 0 0"
+                               Foreground="White"/>
+                    <Border Background="#22FFFFFF" CornerRadius="5" Width="{Binding Width,RelativeSource={RelativeSource TemplatedParent}}" Height="30" Name="ButtonBackground" Visibility="Hidden"/>
+                    <ContentControl Content="{TemplateBinding Content}"
+                                VerticalAlignment="Center"
+                                HorizontalAlignment="Center"
+                                Foreground="White">
+                    </ContentControl>
+                </Grid>
+
+            </Border>
+            <ControlTemplate.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter TargetName="ButtonBackground" Property="Visibility" Value="Visible"/>
+                </Trigger>
+            </ControlTemplate.Triggers>
+        </ControlTemplate>
+    </Window.Resources>
+
+    <Border Margin="5" Background="#FFF9F9F9" CornerRadius="10">
+        <Border.Effect>
+            <DropShadowEffect Color="Gray" ShadowDepth="0" BlurRadius="10" Opacity="0.3" Direction="0"/>
+        </Border.Effect>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="40"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <!--上方信息栏-->
+            <Border Grid.Row="0" Background="#FFF9F9F9" BorderBrush="#DDD" BorderThickness="0 0 0 0.5"
+                    MouseLeftButtonDown="StackPanel_MouseLeftButtonDown" CornerRadius="10 10 0 0">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="100"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Column="0" Text="Xpeng" Foreground="#666666" FontSize="24" FontFamily="Times New Roman" FontWeight="Bold" FontStyle="Italic" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Right">
+                        <Button Height="40" Width="50" 
+                            Template="{StaticResource WindowMinSizeButtonTemplete}" 
+                            Click="WindowMinSize"/>
+                        <Button Height="40" Width="50"
+                            Template="{StaticResource WindowMaxSizeButtonTemplete}"
+                            Click="WindowMaxSize"/>
+                        <Button Height="40" Width="50"
+                            Template="{StaticResource WindowCloseButtonTemplete}"
+                            Click="WindowClose"/>
+                    </StackPanel>
+                </Grid>
+            </Border>
+            <!--设置和绘图区域-->
+            <Grid Grid.Row="1" Margin="10 20 0 0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="300"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <!--设置区域-->
+                <Grid Grid.Column="0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="2*"/>
+                        <RowDefinition Height="1*"/>
+                    </Grid.RowDefinitions>
+                    <!--设置区域-->
+                    <Grid Grid.Row="0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="46*"/>
+                            <RowDefinition Height="46*"/>
+                            <RowDefinition Height="47*"/>
+                            <RowDefinition Height="47*"/>
+                            <RowDefinition Height="47*"/>
+                            <RowDefinition Height="46*"/>
+                            <RowDefinition Height="46*"/>
+                            <RowDefinition Height="46*"/>
+                            <RowDefinition Height="46.4"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="80"/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Row="0" Grid.Column="0" 
+                                   VerticalAlignment="Center" HorizontalAlignment="Center"
+                                   Text="服务器IP" FontSize="16"/>
+                        <TextBox Grid.Row="0" Grid.Column="1"
+                                 Height="30" Width="180" FontSize="16" FontWeight="Light" Text="{Binding mainModel.config.IP,UpdateSourceTrigger=PropertyChanged}"
+                                 Template="{StaticResource InputTextboxTemplate}" Cursor="IBeam" Foreground="#555"/>
+                        <TextBlock Grid.Row="1" Grid.Column="0" 
+                                   VerticalAlignment="Center" HorizontalAlignment="Center"
+                                   Text="网络端口" FontSize="16"/>
+                        <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding mainModel.config.Port,UpdateSourceTrigger=PropertyChanged}"
+                                 Height="30" Width="180" FontSize="16" FontWeight="Light"
+                                 Template="{StaticResource InputTextboxTemplate}" Cursor="IBeam" Foreground="#555"/>
+                        <TextBlock Grid.Row="2" Grid.Column="0" 
+                                   VerticalAlignment="Center" HorizontalAlignment="Center"
+                                   Text="距离A" FontSize="16"/>
+                        <TextBox Grid.Row="2" Grid.Column="1"
+                                 Height="30" Width="180" FontSize="16" FontWeight="Light" Text="{Binding mainModel.config.DirectionA,UpdateSourceTrigger=PropertyChanged}"
+                                 Template="{StaticResource InputTextboxTemplate}" Cursor="IBeam" Foreground="#555"/>
+                        <TextBlock Grid.Row="3" Grid.Column="0" 
+                                   VerticalAlignment="Center" HorizontalAlignment="Center"
+                                   Text="距离B" FontSize="16"/>
+                        <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding mainModel.config.DirectionB,UpdateSourceTrigger=PropertyChanged}"
+                                 Height="30" Width="180" FontSize="16" FontWeight="Light"
+                                 Template="{StaticResource InputTextboxTemplate}" Cursor="IBeam" Foreground="#555"/>
+                        <TextBlock Grid.Row="4" Grid.Column="0" 
+                                   VerticalAlignment="Center" HorizontalAlignment="Center"
+                                   Text="距离C" FontSize="16"/>
+                        <TextBox Grid.Row="4" Grid.Column="1"
+                                 Height="30" Width="180" FontSize="16" FontWeight="Light" Text="{Binding mainModel.config.DirectionC,UpdateSourceTrigger=PropertyChanged}"
+                                 Template="{StaticResource InputTextboxTemplate}" Cursor="IBeam" Foreground="#555"/>
+                        <TextBlock Grid.Row="5" Grid.Column="0" 
+                                   VerticalAlignment="Center" HorizontalAlignment="Center"
+                                   Text="距离D" FontSize="16"/>
+                        <TextBox Grid.Row="5" Grid.Column="1" Text="{Binding mainModel.config.DirectionD,UpdateSourceTrigger=PropertyChanged}"
+                                 Height="30" Width="180" FontSize="16" FontWeight="Light"
+                                 Template="{StaticResource InputTextboxTemplate}" Cursor="IBeam" Foreground="#555"/>
+                        <TextBlock Grid.Row="6" Grid.Column="0" 
+                                   VerticalAlignment="Center" HorizontalAlignment="Center"
+                                   Text="数据记录" FontSize="16"/>
+                        <CheckBox Grid.Row="6" Grid.Column="1" 
+                                  BorderThickness="1,1,0,1"
+                                  HorizontalAlignment="Left"
+                                  Margin="20 0"
+                                  Style="{DynamicResource CheckBoxSwitchStyle}" 
+                                  Content="OFF" Tag="ON"
+                                  IsChecked="{Binding mainModel.config.RecordData}"/>
+                        <TextBlock Grid.Row="7" Grid.Column="0" 
+                                   VerticalAlignment="Center" HorizontalAlignment="Center"
+                                   Text="时间记录" FontSize="16"/>
+                        <CheckBox Grid.Row="7" Grid.Column="1" 
+                                  BorderThickness="1,1,0,1"
+                                  HorizontalAlignment="Left"
+                                  Margin="20 0"
+                                  Style="{DynamicResource CheckBoxSwitchStyle}" 
+                                  Content="OFF" Tag="ON"
+                                  IsChecked="{Binding mainModel.config.TimeStamp}"/>
+
+                        <Button Grid.Row="8" Grid.ColumnSpan="2" Margin="10 0 19 0"
+                                Background="{Binding mainModel.LaunchButtonBack}"
+                                Template="{StaticResource ChooseButtonTemplate}"
+                                Content="{Binding mainModel.LaunchButtonContent}"
+                                FontSize="14"
+                                Command="{Binding LaunchServerCommand}"/>
+                    </Grid>
+                    <!--坐标显示区域-->
+                    <Grid Grid.Row="1" VerticalAlignment="Center">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="40"/>
+                            <RowDefinition Height="40"/>
+                            <RowDefinition Height="40"/>
+                            <RowDefinition Height="40"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Row="0" Grid.Column="0" Text="X" FontFamily="Times New Roman" FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="30 0"/>
+                        <TextBlock Grid.Row="1" Grid.Column="0" Text="Y" FontFamily="Times New Roman" FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="30 0"/>
+                        <TextBlock Grid.Row="2" Grid.Column="0" Text="Z" FontFamily="Times New Roman" FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="30 0"/>
+                        <TextBlock Grid.Row="3" Grid.Column="0" Text="D" FontFamily="Times New Roman" FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="30 0"/>
+                        <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding mainModel.X}" FontFamily="Times New Roman" FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0"/>
+                        <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding mainModel.Y}" FontFamily="Times New Roman" FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0"/>
+                        <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding mainModel.Z}" FontFamily="Times New Roman" FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0"/>
+                        <TextBlock Grid.Row="3" Grid.Column="1" Text="{Binding mainModel.D}" FontFamily="Times New Roman" FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0"/>
+                    </Grid>
+                </Grid>
+                <!--绘图区域-->
+                <Border Grid.Column="1" BorderBrush="#DDD" BorderThickness="1" CornerRadius="10" Margin="0 0 20 50">
+                    <Border.Effect>
+                        <DropShadowEffect Color="#FFACACAC" ShadowDepth="0" BlurRadius="5" Opacity="0.3" Direction="0"/>
+                    </Border.Effect>
+                    <Grid>
+                        <TextBlock Text="&#xe636;" FontFamily="../Assets/Fonts/#iconfont" Foreground="#FF1E1E1E"
+                                   FontSize="100" HorizontalAlignment="Center" VerticalAlignment="Center" Name="Mark"/>
+                        <Button VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="20"
+                                Foreground="Black" Cursor="Hand" Command="{Binding ClearDrawArea}">
+                            <Button.Template>
+                                <ControlTemplate TargetType="Button">
+                                    <TextBlock Text="&#xe603;" FontFamily="../Assets/Fonts/#iconfont" FontSize="24" Foreground="#FFE8E8E8"/>
+                                </ControlTemplate>
+                            </Button.Template>
+                        </Button>
+                        <ItemsControl ItemsSource="{Binding mainModel.Lines}" x:Name="RouteItemControl">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <Canvas x:Name="RouteArea"/>
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Line X1="{Binding X1}" Y1="{Binding Y1}" X2="{Binding X2}" Y2="{Binding Y2}" Stroke="Black" StrokeThickness="3"/>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </Grid>
+                </Border>
+            </Grid>
+        </Grid>
+    </Border>
+</Window>

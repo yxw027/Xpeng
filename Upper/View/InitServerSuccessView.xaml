@@ -1,0 +1,104 @@
+﻿<Window x:Class="Xpeng.View.InitServerSuccessView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Xpeng.View"
+        mc:Ignorable="d"
+        Title="FeedBackView" ShowInTaskbar="False"
+        Height="240" Width="360"
+        FontFamily="Microsoft YaHei" FontWeight="medium"
+        ResizeMode="NoResize" WindowStartupLocation="CenterScreen"
+        WindowStyle="None" AllowsTransparency="True" Background="{x:Null}"
+        TextOptions.TextFormattingMode="Display" 
+        TextOptions.TextRenderingMode="ClearType" 
+        TextOptions.TextHintingMode="Fixed" UseLayoutRounding="True">
+    <Window.Resources>
+        <!--页面关闭按钮模板-->
+        <ControlTemplate x:Key="CloseButton" TargetType="Button">
+            <Border Background="Transparent" Name="back" CornerRadius="0 10 0 0">
+                <Path Data="M0 0 12 12 M0 12 12 0" Stroke="Black" StrokeThickness="1" 
+                      VerticalAlignment="Center" HorizontalAlignment="Center"/>
+            </Border>
+
+            <!-- 设置鼠标移动到按钮上时，背景颜色变化 -->
+            <ControlTemplate.Triggers>
+                <!-- 设置触发源和触发条件 -->
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter TargetName="back" Property="Background" Value="#F7F9FA"/>
+                </Trigger>
+
+                <Trigger Property="IsPressed" Value="True">
+                    <Setter TargetName="back" Property="Background" Value="Red"></Setter>
+                </Trigger>
+            </ControlTemplate.Triggers>
+        </ControlTemplate>
+
+        <!--输入框模板-->
+        <ControlTemplate TargetType="TextBox" x:Key="InputTextBox">
+            <Border x:Name="border" Background="White" CornerRadius="5" BorderBrush="#DDD" BorderThickness="2">
+                <ScrollViewer x:Name="PART_ContentHost" Focusable="false" Margin="5 0"
+                              VerticalAlignment="Top"
+                              HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden"/>
+            </Border>
+        </ControlTemplate>
+
+        <!--选择按钮模板-->
+        <ControlTemplate x:Key="ChooseButtonTemplate" TargetType="Button">
+            <Border Background="#0a7bbc" CornerRadius="5" Width="70" Height="30">
+                <Grid>
+                    <Border Background="#22FFFFFF" CornerRadius="5" Width="70" Height="30" Name="ButtonBackground" Visibility="Hidden"/>
+                    <ContentControl Content="{TemplateBinding Content}"
+                                VerticalAlignment="Center"
+                                HorizontalAlignment="Center"
+                                Foreground="White">
+                    </ContentControl>
+                </Grid>
+
+            </Border>
+            <ControlTemplate.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter TargetName="ButtonBackground" Property="Visibility" Value="Visible"/>
+                </Trigger>
+            </ControlTemplate.Triggers>
+        </ControlTemplate>
+    </Window.Resources>
+
+    <Border Margin="5" Background="white" CornerRadius="10" MouseLeftButtonDown="Border_MouseLeftButtonDown">
+        <Border.Effect>
+            <DropShadowEffect Color="Gray" ShadowDepth="0" BlurRadius="5" Opacity="0.3" Direction="0"/>
+        </Border.Effect>
+
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="0.7*"/>
+                <RowDefinition Height="2*"/>
+                <RowDefinition Height="0.8*"/>
+            </Grid.RowDefinitions>
+            <!--页面关闭按钮-->
+            <Button VerticalAlignment="Top" HorizontalAlignment="Right" 
+                    Width="40" Height="30"
+                    Template="{StaticResource CloseButton}"
+                    Click="Button_Click"/>
+            <!--提示信息-->
+            <StackPanel Grid.Row="1" Orientation="Horizontal"
+                        HorizontalAlignment="Center" VerticalAlignment="Center">
+                <TextBlock Text="&#xebe6;" FontFamily="../Assets/Fonts/#iconfont" FontSize="22" VerticalAlignment="Center" Margin="10 0" Foreground="Green"/>
+                <TextBlock Text="TCP服务器启动成功！" FontSize="18" Foreground="Green"/>
+            </StackPanel>
+
+            <Grid Grid.Row="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="3*"/>
+                    <ColumnDefinition Width="1*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Text="{Binding feedBackModel.ErrorMessage}" FontSize="14" Foreground="Red"
+                           VerticalAlignment="Center" Margin="70 0"/>
+                <Button Grid.Column="1" Width="100" Content="确 定" Template="{StaticResource ChooseButtonTemplate}"
+                        HorizontalAlignment="Center" VerticalAlignment="Center"
+                        Click="Button_Click"/>
+            </Grid>
+
+        </Grid>
+    </Border>
+</Window>

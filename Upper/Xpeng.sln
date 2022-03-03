@@ -1,0 +1,30 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.32112.339
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xpeng", "Xpeng.csproj", "{96916B09-314B-43D9-B6CA-61385D5D3D69}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{640353CA-21AA-40D4-874C-7FC45A50AA07}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{96916B09-314B-43D9-B6CA-61385D5D3D69}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{96916B09-314B-43D9-B6CA-61385D5D3D69}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{96916B09-314B-43D9-B6CA-61385D5D3D69}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{96916B09-314B-43D9-B6CA-61385D5D3D69}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E1F1F6F6-A12B-48CB-BAAD-26690BB62924}
+	EndGlobalSection
+EndGlobal
