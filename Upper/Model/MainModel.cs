@@ -93,11 +93,6 @@ namespace Xpeng.Model
         {
             // 加载设置数据
             config = Config.GetConfig();
-            if(Config.GetLocalAddress() != null)
-            {
-                config.IP = Config.GetLocalAddress();
-            }
-
             Lines = new ObservableCollection<MyLine>();
         }
     }

@@ -4,16 +4,16 @@
 winexe
 C#
 .cs
-D:\Project\Xpeng\obj\Debug\
+D:\Project\Xpeng\Upper\obj\Debug\
 Xpeng
 none
 false
 DEBUG;TRACE
-D:\Project\Xpeng\App.xaml
+D:\Project\Xpeng\Upper\App.xaml
 51888933693
 1-620804601
 19-1369573555
-22733377997
+221711635969
 View\DisposeServerFailedView.xaml;View\DisposeServerSuccessView.xaml;View\InitServerFailedView.xaml;View\InitServerSuccessView.xaml;View\MainView.xaml;
 
 False

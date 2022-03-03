@@ -131,7 +131,7 @@ namespace Xpeng.Common
         public static void ResponseClient(object o)
         {
             Socket client = o as Socket;
-            Regex regex = new Regex(@"^#\d+,\d+,\d+,\d+,\d+,\d+#$");
+            Regex regex = new Regex(@"^\d+,\d+,\d+,\d+,\d+,\d+$");
             try
             {
                 while (server != null)
@@ -139,52 +139,62 @@ namespace Xpeng.Common
                     // 减少CPU占用
                     Thread.Sleep(400);
 
-                    // 解析坐标信息
+                    // 解析坐标信息(格式为：#[Data]#[Data]...#[Data])
                     string msg = RecvMessage(client);
-                    if (regex.IsMatch(msg))
+                    string[] msgSub = msg.Split('#');
+                    foreach(string sub in msgSub)
                     {
-                        var timeStamps = new Regex(@"\d+").Matches(msg);
-
-                        List<long> timeStampList = new List<long>();
-                        foreach (var timeStamp in timeStamps)
+                        if (regex.IsMatch(sub))
                         {
-                            long timeStampNow = long.Parse(timeStamp.ToString());
-                            if((timeStampList.Count > 0) && (timeStampNow < timeStampList.Last()))
+                            var timeStamps = new Regex(@"\d+").Matches(sub);
+
+                            // 设备A时间戳
+                            List<long> timeStampListA = new List<long>()
                             {
-                                // 当前时间戳小于前时间戳, 计数器计满清零
-                                long timeStampLast = long.Parse(timeStampList.Last().ToString());
-                                timeStampList.Add(timeStampNow + (long)Math.Pow(2, 40) - timeStampLast);
+                                long.Parse(timeStamps[0].ToString()),
+                                long.Parse(timeStamps[3].ToString()),
+                                long.Parse(timeStamps[4].ToString())
+                            };
+                            if(timeStampListA[1] < timeStampListA[0])
+                            {
+                                timeStampListA[1] = (long)Math.Pow(2, 40) - timeStampListA[0] + timeStampListA[1]; 
                             }
-                            timeStampList.Add(long.Parse(timeStamp.ToString()));
-                        }
-                        
-                        long T_round1 = timeStampList[3] - timeStampList[0];
-                        long T_round2 = timeStampList[5] - timeStampList[2];
-                        long T_reply1 = timeStampList[2] - timeStampList[1];
-                        long T_reply2 = timeStampList[4] - timeStampList[3];
-                        double T_prop = (T_round1 * T_round2 - T_reply1 * T_reply2) * 15.625 * Math.Pow(10, -12) / (T_round1 + T_round2 + T_reply1 + T_reply2);
-                        double Distance = T_prop * 3 * Math.Pow(10, 8);
+                            if (timeStampListA[2] < timeStampListA[1])
+                            {
+                                timeStampListA[2] = (long)Math.Pow(2, 40) - timeStampListA[1] + timeStampListA[2];
+                            }
 
-                        // 绘制图形
-                        App.Current.Dispatcher.Invoke(new Action(() =>
-                        {
-                            GlobalValues.mainViewModel.mainModel.D = Distance.ToString();
-                        }));
+                            // 设备B时间戳
+                            List<long> timeStampListB = new List<long>()
+                            {
+                                long.Parse(timeStamps[1].ToString()),
+                                long.Parse(timeStamps[2].ToString()),
+                                long.Parse(timeStamps[5].ToString())
+                            };
+                            if (timeStampListB[1] < timeStampListB[0])
+                            {
+                                timeStampListB[1] = (long)Math.Pow(2, 40) - timeStampListB[0] + timeStampListB[1];
+                            }
+                            if (timeStampListB[2] < timeStampListB[1])
+                            {
+                                timeStampListB[2] = (long)Math.Pow(2, 40) - timeStampListB[1] + timeStampListB[2];
+                            }
+
+
+                            long T_round1 = timeStampListA[1] - timeStampListA[0];
+                            long T_round2 = timeStampListB[2] - timeStampListB[1];
+                            long T_reply1 = timeStampListB[1] - timeStampListB[0];
+                            long T_reply2 = timeStampListA[2] - timeStampListA[1];
+                            double T_prop = (T_round1 * T_round2 - T_reply1 * T_reply2) * 15.625 * Math.Pow(10, -12) / (T_round1 + T_round2 + T_reply1 + T_reply2);
+                            double Distance = T_prop * 3 * Math.Pow(10, 8);
+
+                            // 绘制图形
+                            App.Current.Dispatcher.Invoke(new Action(() =>
+                            {
+                                GlobalValues.mainViewModel.mainModel.D = Distance.ToString("f5");
+                            }));
+                        }
                     }
-                    
-                    //foreach(string sub in msgSub)
-                    //{
-                    //    if (regex.IsMatch(sub))
-                    //    {
-                    //        string[] strs = sub.Split(',');
-                    //        double x = double.Parse(strs[0]);
-                    //        double y = double.Parse(strs[1]);
-                    //        App.Current.Dispatcher.Invoke(new Action(() =>
-                    //        {
-                    //            GlobalValues.mainViewModel.AddPoints(x, y);
-                    //        }));
-                    //    }
-                    //}
                 }
                 client.Close();
                 GlobalValues.mainViewModel.mainModel.LaunchButtonBack = "#FF0682FF";
