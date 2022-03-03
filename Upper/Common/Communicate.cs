@@ -205,7 +205,11 @@ namespace Xpeng.Common
                             // 绘制图形
                             App.Current.Dispatcher.Invoke(new Action(() =>
                             {
-                                GlobalValues.mainViewModel.mainModel.D = (Distance - GlobalValues.mainViewModel.mainModel.ZeroError).ToString("f5");
+                                double d = Distance - GlobalValues.mainViewModel.mainModel.ZeroError;
+                                if((d >= GlobalValues.DISTANCE_MIN) && (d <= GlobalValues.DISTANCE_MAX))
+                                {
+                                    GlobalValues.mainViewModel.mainModel.D = d.ToString("f5");
+                                }
                             }));
                         }
                     }

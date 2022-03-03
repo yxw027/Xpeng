@@ -118,8 +118,15 @@ namespace Xpeng.View
         /// <param name="e"></param>
         protected override void OnClosed(EventArgs e)
         {
+            // 保存设置
             Config.SaveConfig(GlobalValues.mainViewModel.mainModel.config);
+
+            // 保存日志
             DataRecord.DisposeRecord();
+
+            // 释放TCP连接
+            Communicate.DisposeServer();
+
             base.OnClosed(e);
             App.Current.Shutdown();
         }

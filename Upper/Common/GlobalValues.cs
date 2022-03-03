@@ -19,5 +19,8 @@ namespace Xpeng.Common
         public static double AXES_X_MAX = 24.6;
         public static double AXES_Y_MIN = -15.0;
         public static double AXES_Y_MAX = 15.0;
+
+        public static double DISTANCE_MIN = 0.0;
+        public static double DISTANCE_MAX = 1000.0;
     }
 }
